@@ -5,13 +5,15 @@ public class Auto{
     String nombre;
     Reloj tiempoVuelta;
 
-    public Auto(String nombre, Reloj tiempoVuelta){
+    public Auto(){
         this.nombre=nombre;
         this.tiempoVuelta=tiempoVuelta;
     }
 
     @Override
     public String toString() {
-        return super.toString();
+        System.out.println(nombre);
+        System.out.println(tiempoVuelta);
+        return null;
     }
 }
