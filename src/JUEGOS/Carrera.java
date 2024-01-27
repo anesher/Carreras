@@ -1,20 +1,68 @@
 package JUEGOS;
 
-import java.util.Arrays;
-import java.util.List;
+
 
 public class Carrera  {
-    public boolean Carreras;
-    Reloj reloj=new Reloj();
-    Auto auto=new Auto();
+    private static final int MAX_COCHES = 10;
 
-    public void Carreras() {
-        // Creamos el Array nombres
-        String[] Auto = {"Mercedes", "Audi", "Renault"};
+    private Coche[] coches;
+    private Reloj tiempoInicio;
+    private boolean enCurso;
 
-        // Mediante Arrays creamos una nueva lista
-        List<String> listaNombres = Arrays.asList(Auto);
+    public Carrera(Reloj tiempoInicio) {
+        this.tiempoInicio = tiempoInicio;
+        this.coches = new Coche[MAX_COCHES];
+        this.enCurso = false;
     }
 
+    public void agregarCoche(Coche coche) {
+        if (!enCurso) {
+            for (int i = 0; i < coches.length; i++) {
+                if (coches[i] == null) {
+                    coches[i] = coche;
+                    return;
+                }
+            }
+            System.out.println("No hay espacio para más coches.");
+        } else {
+            System.out.println("La carrera ya ha comenzado, no se pueden agregar más coches.");
+        }
+    }
 
+    public void comenzarCarrera() {
+        if (!enCurso) {
+            enCurso = true;
+            System.out.println("La carrera ha comenzado.");
+        } else {
+            System.out.println("La carrera ya está en curso.");
+        }
+    }
+
+    public void registrarTiempoVuelta(Coche coche, int horas, int minutos, int segundos) {
+        if (enCurso) {
+            coche.tiempoVuelta.sumarSegundos(horas * 3600 + minutos * 60 + segundos);
+        } else {
+            System.out.println("La carrera no está en curso.");
+        }
+    }
+
+    public void finalizarCarrera() {
+        if (enCurso) {
+            enCurso = false;
+            System.out.println("La carrera ha finalizado.");
+            generarClasificacion();
+        } else {
+            System.out.println("La carrera aún no ha comenzado.");
+        }
+    }
+
+    private void generarClasificacion() {
+        System.out.println("Clasificación final:");
+        for (int i = 0; i < coches.length; i++) {
+            if (coches[i] != null) {
+                System.out.println((i + 1) + ". " + coches[i]);
+            }
+        }
+    }
 }
+
